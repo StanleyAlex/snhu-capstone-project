@@ -1,0 +1,23 @@
+{
+  "name": "snhu-capstone-project-api",
+  "description": "API layer for first responders dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Stanley Alex Devadoss",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.bundle.js",
+    "build": "webpack",
+    "start-dev": "nodemon ./server.js localhost 5000"
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.20",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
