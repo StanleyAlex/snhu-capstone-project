@@ -126,7 +126,9 @@ a:hover {
     margin-top: 2rem;
 }
 
-button#loginSubmit:disabled {
+button#loginSubmit:disabled,
+button#registerSubmit:disabled,
+button#preferenceSubmit:disabled {
     background-color: gray;
     border-color: gray;
     cursor: no-drop;
@@ -176,6 +178,11 @@ button#loginSubmit:disabled {
     min-height: 75vh;
 }
 
+.user-title {
+    display: flex;
+    justify-content: space-between;
+}
+
 .card-body {
     padding-top: 0.75rem;
     padding-bottom: 0.5rem;
@@ -190,11 +197,54 @@ button#loginSubmit:disabled {
 
 .logout {
     text-align: right;
-    margin-top: 0.75rem;
-    margin-left: 0.25rem;
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
 }
 
 .logout > a {
-    text-align: right;
     color: #c82333;
+}
+
+.row {
+    padding: 1rem 2rem;
+}
+
+.register-misc {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.required {
+    color: red;
+}
+
+.required-text {
+    color: red;
+    font-size: 1rem;
+    margin-top: 2rem;
+    margin-left: 1rem;
+}
+
+.register-controls, .preference-controls {
+    margin-top: 2rem;
+    margin-left: 2rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.register-button-bar, .preference-button-bar {
+    margin-left: 20rem;
+}
+
+.radio-options {
+    display: inline-flex;
+}
+
+.radio-no {
+    margin-left: 1rem;
+}
+
+.loc-info-text {
+    font-size: 0.75rem;
+    margin-left: 3rem;
 }

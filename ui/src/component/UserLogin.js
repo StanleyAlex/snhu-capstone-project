@@ -11,7 +11,7 @@ const resetLoginForm = ({setLoginDisabled, resetError}) => () => {
     resetError();
 };
 
-const onFormChange = ({setLoginDisabled, setEntered}) => () => {
+const onFormChange = ({setLoginDisabled}) => () => {
     const userName = document.getElementById("userName").value;
     const password = document.getElementById("password").value;
 
@@ -35,13 +35,13 @@ const UserLogin = (props) => {
                     <label htmlFor="userName">UserName</label>
                     <input type="text" className="form-control" id="userName"
                            aria-describedby="emailHelp" placeholder="Enter UserName" onChange={onFormChange({setLoginDisabled})} />
-                    <div className="forgot-username"><a href="#">Forgot Username?</a></div>
+                    <div className="forgot-username"><a href="#" title="Forgot UserName?">Forgot UserName?</a></div>
                 </div>
                 <div key="password" className="form-group">
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password"
                            placeholder="Enter Password" onChange={onFormChange({setLoginDisabled})} />
-                    <div className="forgot-password"><a href="#">Forgot Password?</a></div>
+                    <div className="forgot-password"><a href="#" title="Forgot Password?">Forgot Password?</a></div>
                 </div>
                 <div key="buttons" className="button-bar">
                     <button id="loginReset" aria-label="Reset" title="Reset" type="button" className="btn btn-danger" onClick={resetLoginForm({setLoginDisabled, resetError})}>Reset</button>
@@ -53,20 +53,18 @@ const UserLogin = (props) => {
             </form></div>) :
             (<div className="card">
                 <img className="card-img-top" height="250px" src={Avatar} alt={user.first_name}/>
-                    <div className="card-body">
-                        <div>
-                            <h4 className="card-title">{user.first_name}</h4>
-                            <p className="card-text">You are monitoring these locations - 12345, 67890</p>
-                        </div>
+                <div className="card-body">
+                    <div className="user-title">
+                        <span><h4 className="card-title">{user.first_name}</h4></span>
+                        <span className="logout"><a href="#" title="Logout" onClick={logoutUser({ setAuthenticated })}>LOGOUT</a></span>
+                    </div>
+                    <div className="user-content">
+                        <p className="card-text">You are monitoring these locations - 12345, 67890</p>
                         <div className="user-button-bar">
-                            <div>
-                                <a href="#" className="btn btn-primary">Edit Preferences</a>
-                            </div>
-                            <div className="logout">
-                                <a href="#" onClick={logoutUser({ setAuthenticated })}>LOGOUT</a>
-                            </div>
+                            <a href="/preferences" title="Edit Preferences" className="btn btn-primary">Edit Preferences</a>
                         </div>
                     </div>
+                </div>
             </div>))] : (
             <div className="loader">
                 <span className="sr-only">Authenticating User...</span>
