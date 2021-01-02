@@ -1,21 +1,55 @@
 import {useState} from 'react';
-import WithLayout from "./WithLayout";
 import {Link} from "react-router-dom";
-import {isEmpty} from "lodash";
+import {some, isEmpty, map} from 'lodash';
+import * as EmailValidator from 'email-validator';
+import WithLayout from "./WithLayout";
+
+const inputFields = document.getElementsByTagName("input");
+const textAreas = document.getElementsByTagName("textarea");
 
 const resetRegisterForm = ({setRegisterDisabled}) => () => {
-    document.getElementById("userName").value = "";
-    document.getElementById("password").value = "";
+    map(inputFields, (field) => field.value = "");
+    map(textAreas, (field) => field.value = "");
+    document.getElementById("email-error").style.display = "none";
+    document.getElementById("phone-error").style.display = "none";
     setRegisterDisabled(true);
 };
 
-const onFormChange = ({setRegisterDisabled}) => () => {
-    const userName = document.getElementById("userName").value;
-    const password = document.getElementById("password").value;
+const onFormChange = ({setRegisterDisabled}) => (e) => {
 
-    if (!isEmpty(userName) && !isEmpty(password)) {
-        setRegisterDisabled(false);
+    let disableRegister = some(inputFields, (field) => isEmpty(field.value));
+
+    if (e.target.id === "email") {
+        if (!isEmpty(e.target.value)) {
+            const emailValue = e.target.value;
+            const emailValidation = EmailValidator.validate(emailValue);
+
+            if (!emailValidation) {
+                document.getElementById("email-error").style.display = "inline";
+                disableRegister = true;
+            } else {
+                document.getElementById("email-error").style.display = "none";
+            }
+        } else {
+            document.getElementById("email-error").style.display = "none";
+        }
     }
+
+    if (e.target.id === "phone") {
+        if (!isEmpty(e.target.value)) {
+            const phoneValue = e.target.value;
+            if (phoneValue.length !== 10 || isNaN(phoneValue)) {
+                document.getElementById("phone-error").style.display = "inline";
+                return true;
+            } else {
+                document.getElementById("phone-error").style.display = "none";
+            }
+        } else {
+            document.getElementById("phone-error").style.display = "none";
+        }
+    }
+
+    setRegisterDisabled(disableRegister);
 }
 
 const UserRegistration = () => {
@@ -56,11 +90,13 @@ const UserRegistration = () => {
               <div className="col-sm-3">
                   <input type="email" className="form-control" id="email"
                          aria-describedby="email" placeholder="Enter Email (Optional)" onChange={onFormChange({setRegisterDisabled})} />
+                  <div className="email-error" id="email-error">Invalid Email</div>
               </div>
               <label htmlFor="phone" className="col-sm-2 col-form-label">Phone <span className="required">*</span></label>
               <div className="col-sm-3">
                   <input type="text" className="form-control" id="phone"
-                         aria-describedby="phone" placeholder="Enter Phone" onChange={onFormChange({setRegisterDisabled})} />
+                         aria-describedby="phone" placeholder="Enter Phone" maxLength={10} onChange={onFormChange({setRegisterDisabled})} />
+                  <div className="phone-error" id="phone-error">Invalid Phone</div>
               </div>
           </div>
           <div className="form-group row">
@@ -69,8 +105,8 @@ const UserRegistration = () => {
                   <textarea className="form-control" id="address"
                             aria-describedby="address" placeholder="Enter Address (Optional)" onChange={onFormChange({setRegisterDisabled})} />
               </div>
-              <div className="required-text">* Required Field</div>
           </div>
+          <div className="row required-text col-sm-2">* Required Field</div>
           <div className="register-controls">
               <span className="back-dashboard">
                   <Link to="/dashboard"><i className="fa fa-backward"></i> Back To Dashboard</Link>
