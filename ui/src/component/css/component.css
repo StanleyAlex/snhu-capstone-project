@@ -1,0 +1,200 @@
+html, body {
+    height: 100%;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.frims-header {
+    display: inline-flex;
+    width: 100%;
+    height: 8rem;
+    background-color: #0c5460;
+    color: #fff3cd;
+    font-weight: bold;
+    padding-right: 0;
+}
+
+.frims-text {
+    width: 100%;
+    margin-top: 1.5rem;
+    text-align: left;
+    padding-left: 2rem;
+}
+
+.bold-color {
+    color: #c82333;
+    font-weight: bold;
+}
+
+.frims-text option:first-letter
+{
+    text-decoration:underline;
+}
+
+.frims-image {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.header-image {
+    width: 100%;
+    height: 8rem;
+}
+
+.frims-dashboard {
+    margin-left: 1rem;
+    margin-right: 0.25rem;
+    padding: 0.5rem;
+    width: 98%;
+}
+
+.dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.misc-details {
+    border-radius: 4px;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+}
+
+.login-title {
+    color: #007BFF;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.user-login {
+    background-color: lightsteelblue;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    padding: 1rem;
+    min-height: 53vh;
+}
+
+.form-group {
+    margin-bottom: .5rem;
+}
+
+.forgot-username {
+    text-align: right;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.forgot-username > a {
+    color: #c82333;
+}
+
+.forgot-password {
+    text-align: right;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.forgot-password > a {
+    color: #c82333;
+}
+
+.recent-incidents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: lightsteelblue;
+    border-radius: 4px;
+    margin-bottom: 0.25rem;
+    min-height: 15vh;
+}
+
+.btn {
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+}
+
+.button-bar {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+button#loginSubmit:disabled {
+    background-color: gray;
+    border-color: gray;
+    cursor: no-drop;
+}
+
+.new-user {
+    font-size: 1rem;
+    font-weight: bold;
+    color: blueviolet;
+    text-align: right;
+    padding: 1.5rem 0.5rem 0 0;
+}
+
+.frims-footer {
+    display: flex;
+    width: 100%;
+    height: 4.5rem;
+    background-color: #0c5460;
+    font-weight: bold;
+    padding-right: 0;
+}
+
+.frims-copyright {
+    color: #fff3cd;
+    margin-top: 1.5rem;
+}
+
+.frims-social-media {
+    text-align: right;
+    margin-top: 1.25rem;
+}
+
+.fab {
+    font-size: 1rem;
+}
+
+.loader {
+    margin-top: 30%;
+    text-align: center;
+}
+
+.loader-image {
+    background-color: lightsteelblue;
+}
+
+.page-component {
+    min-height: 75vh;
+}
+
+.card-body {
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
+}
+
+.user-button-bar {
+    display: inline-flex;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+}
+
+.logout {
+    text-align: right;
+    margin-top: 0.75rem;
+    margin-left: 0.25rem;
+}
+
+.logout > a {
+    text-align: right;
+    color: #c82333;
+}

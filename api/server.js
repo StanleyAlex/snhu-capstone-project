@@ -1,4 +1,5 @@
 const express = require("express");
+const isEmpty = require("lodash/isEmpty");
 const bodyParser = require("body-parser");
 const app = express()
 const port = 3005;
@@ -16,7 +17,8 @@ app.get('/', (req,res) => {
 app.post('/api/loginUser', async (req,res) => {
     const { userName, password } = req.body;
     const userDetails = await loginUser({ userName, password });
-    res.json(userDetails);
+    const statusCode = isEmpty(userDetails) ? 500 : 200;
+    res.json({data: userDetails, statusCode});
 });
 
 app.listen(port, () => {

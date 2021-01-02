@@ -6,7 +6,7 @@ const loginUser = async ({userName, password}) => {
     const user_sql = "select * from user where user_name = ? and password = ?"
 
     return new Promise((resolve, reject) => {
-        connection.query(user_sql, [userName, password], (err, results, fields) => {
+        connection.query(user_sql, [userName, password], (err, results) => {
             if (err) {
                 return reject(err);
             }
