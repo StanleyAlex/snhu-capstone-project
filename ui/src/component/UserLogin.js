@@ -20,6 +20,10 @@ const onFormChange = ({setLoginDisabled}) => () => {
     }
 }
 
+const goToUserPreferences = ({ userId }) => () => {
+    window.location.replace("/preferences?userId="+userId);
+}
+
 const UserLogin = (props) => {
     const { loading, authenticated, loginError, user, authenticateUser, logoutUser, resetError, setters: { setLoading, setLoginError, setAuthenticated } } = props;
 
@@ -61,7 +65,7 @@ const UserLogin = (props) => {
                     <div className="user-content">
                         <p className="card-text">You are monitoring these locations - 12345, 67890</p>
                         <div className="user-button-bar">
-                            <a href="/preferences" title="Edit Preferences" className="btn btn-primary">Edit Preferences</a>
+                            <a href="#" title="Edit Preferences" className="btn btn-primary" onClick={goToUserPreferences({ userId: user.user_id })}>Edit Preferences</a>
                         </div>
                     </div>
                 </div>

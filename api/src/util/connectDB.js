@@ -8,7 +8,7 @@ const createDBConnectionPool = () => {
         host: "localhost",
         user: "root",
         password: "c@pstone",
-        database: "inc-info"
+        database: "inc-info",
     });
 };
 

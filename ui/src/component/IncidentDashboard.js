@@ -2,14 +2,14 @@ import {useState} from 'react';
 import WithLayout from "./WithLayout";
 import UserLogin from "./UserLogin";
 import {isEmpty} from "lodash";
-import loginUser from "../service/LoginService";
+import loginUserService from "../service/LoginService";
 
 const authenticateUser = ({ setLoading, setLoginError, setAuthenticated }) => () => {
     const userName = document.getElementById("userName").value;
     const password = document.getElementById("password").value;
 
     setLoading(true);
-    loginUser({ userName, password }).then(response => {
+    loginUserService({ userName, password }).then(response => {
         setLoading(false);
         if (response.statusCode !== 200) {
             setLoginError(true);

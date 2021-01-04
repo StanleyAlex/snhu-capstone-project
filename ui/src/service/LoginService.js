@@ -1,4 +1,4 @@
-const loginUser = async ({ userName, password }) => {
+const loginUserService = async ({ userName, password }) => {
     const response = await fetch(`/api/loginUser`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -8,4 +8,4 @@ const loginUser = async ({ userName, password }) => {
     return response.json();
 }
 
-export default loginUser;
+export default loginUserService;

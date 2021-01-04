@@ -1,4 +1,4 @@
-const { getDBConnection, releaseDBConnection, connectionPool } = require("../util/connectDB");
+const { getDBConnection, releaseDBConnection } = require("../util/connectDB");
 
 const loginUser = async ({userName, password}) => {
     const connection = await getDBConnection();
