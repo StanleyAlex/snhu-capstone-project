@@ -1,8 +1,9 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {isEmpty} from 'lodash';
 import {Link} from "react-router-dom";
 import Loader from "./images/loader.gif";
 import Avatar from "./images/avatar.png";
+import {getUserPreferences} from "../service/UserPreferencesService";
 
 const resetLoginForm = ({setLoginDisabled, resetError}) => () => {
     document.getElementById("userName").value = "";
@@ -28,6 +29,13 @@ const UserLogin = (props) => {
     const { loading, authenticated, loginError, user, authenticateUser, logoutUser, resetError, setters: { setLoading, setLoginError, setAuthenticated } } = props;
 
     const [loginDisabled, setLoginDisabled] = useState(true);
+    const [locations, setLocations] = useState("");
+
+    useEffect(() => {
+        getUserPreferences({userId: user.user_id}).then((response) => {
+            setLocations(response.data.locations);
+        });
+    });
 
     return (<div className="user-login">
         {!loading ? [(!authenticated ? (<div><h3 className="login-title"><span className="badge bg-white">Login</span></h3>
@@ -63,7 +71,7 @@ const UserLogin = (props) => {
                         <span className="logout"><a href="#" title="Logout" onClick={logoutUser({ setAuthenticated })}>LOGOUT</a></span>
                     </div>
                     <div className="user-content">
-                        <p className="card-text">You are monitoring these locations - 12345, 67890</p>
+                        <p className="card-text">You are monitoring these locations - {locations}</p>
                         <div className="user-button-bar">
                             <a href="#" title="Edit Preferences" className="btn btn-primary" onClick={goToUserPreferences({ userId: user.user_id })}>Edit Preferences</a>
                         </div>

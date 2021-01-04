@@ -19,8 +19,10 @@ const authenticateUser = ({ setLoading, setLoginError, setAuthenticated }) => ()
             setLoginError(false);
             setAuthenticated(true);
         }
-        return true;
+
+        return response.data.user_id;
     });
+
     return true;
 };
 
