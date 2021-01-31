@@ -1,4 +1,4 @@
-DROP TABLE `inc-info`.`user`;
+DROP TABLE IF EXISTS `inc-info`.`user`;
 
 CREATE TABLE `inc-info`.`user` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
@@ -13,7 +13,7 @@ CREATE TABLE `inc-info`.`user` (
   UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
-  DROP TABLE `inc-info`.`user_preference`;
+  DROP TABLE IF EXISTS `inc-info`.`user_preference`;
 
   CREATE TABLE `inc-info`.`user_preference` (
     `user_preference_id` INT NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,7 @@ CREATE TABLE `inc-info`.`user` (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE);
 
-  DROP TABLE `inc-info`.`user_incident`;
+  DROP TABLE IF EXISTS `inc-info`.`user_incident`;
 
   CREATE TABLE `inc-info`.`user_incident` (
     `user_incident_id` INT NOT NULL AUTO_INCREMENT,

@@ -53,7 +53,6 @@ a:hover {
 .dashboard {
     display: flex;
     justify-content: center;
-    align-items: center;
     border-radius: 4px;
 }
 
@@ -263,4 +262,35 @@ button#preferenceSubmit:disabled {
     color: red;
     float: left;
     font-size: 0.75rem;
+}
+
+.incidents-list-title {
+    margin-bottom: 2rem;
+}
+
+.incidents-list-error {
+    color: red;
+}
+
+.page-navigation {
+    display: flex;
+}
+
+.page-count {
+    width: 45%;
+    margin-left: 1rem;
+    padding-top: 1rem;
+}
+
+.page-numbers {
+    width: 55%;
+    margin-right: 1rem;
+}
+
+.incident-body .ACTIVE {
+    color: red;
+}
+
+.page-link {
+    max-width: 3rem;
 }
