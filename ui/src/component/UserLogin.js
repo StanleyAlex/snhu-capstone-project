@@ -71,7 +71,11 @@ const UserLogin = (props) => {
                         <span className="logout"><a href="#" title="Logout" onClick={logoutUser({ setAuthenticated })}>LOGOUT</a></span>
                     </div>
                     <div className="user-content">
-                        <p className="card-text">You are monitoring these locations - {locations}</p>
+                        {isEmpty(locations) ? (
+                            <p className="card-text">Please set zip codes under Preferences to monitor incidents.</p>
+                        ): (
+                            <p className="card-text">You are monitoring these locations - {locations}</p>
+                        )}
                         <div className="user-button-bar">
                             <a href="#" title="Edit Preferences" className="btn btn-primary" onClick={goToUserPreferences({ userId: user.user_id })}>Edit Preferences</a>
                         </div>

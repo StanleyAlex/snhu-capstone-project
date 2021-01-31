@@ -8,6 +8,8 @@ const { loginUser } = require("./src/business/loginUser");
 const { registerUser } = require("./src/business/registerUser");
 const { getUserPreferences } = require("./src/business/getUserPreferences");
 const { saveUserPreferences } = require("./src/business/saveUserPreferences");
+const Config = require("./env.json");
+const axios = require("axios");
 
 
 app.use(bodyParser.json());
@@ -23,7 +25,8 @@ app.post('/api/loginUser', async (req,res) => {
     const { userName, password } = req.body;
     const userDetails = await loginUser({ userName, password });
     const statusCode = isEmpty(userDetails) ? 500 : 200;
-    res.json({data: userDetails, statusCode});
+
+    res.json({data: { userDetails }, statusCode});
 });
 
 app.post('/api/registerUser', async (req,res) => {
@@ -60,6 +63,55 @@ app.post('/api/saveUserPreferences', async (req,res) => {
         errorMessage = error.sqlMessage;
     }
     res.json({ statusCode, errorMessage });
+});
+
+app.post('/api/getIncidents', async (req,res) => {
+    const { locations, currentPage, type, pages } = req.body;
+    const countQuery = 'select count(*) as totalCount';
+    const countRequestURL = `${Config.TRAFFIC_API}?$query=${countQuery}`;
+    const countResponse = await axios(countRequestURL);
+
+    if (countResponse.status !== 200) {
+        res.json({data: {}, statusCode: countResponse.status});
+    } else {
+        const totalCount = countResponse.data[0].totalCount;
+        const pageLimit = Config.PAGE_LIMIT;
+        let incidentDetails = { totalCount, pageLimit };
+        let noOfPages = 9;
+        let returnPages = type === 'page' ? pages : [];
+
+        if (type !== "page") {
+            if (type !== "last") {
+                if (totalCount < (pageLimit * (currentPage + noOfPages))) {
+                    noOfPages = Math.ceil(totalCount - (pageLimit * (currentPage-1)) / pageLimit);
+                }
+                for (let ctr = currentPage; ctr <= (currentPage + noOfPages); ctr++) {
+                    returnPages.push(ctr);
+                }
+            } else {
+                if (currentPage > (noOfPages + 1)) {
+                    for (let ctr = (currentPage - noOfPages); ctr <= currentPage; ctr++) {
+                        returnPages.push(ctr);
+                    }
+                } else {
+                    for (let ctr = 1; ctr <= currentPage; ctr++) {
+                        returnPages.push(ctr);
+                    }
+                }
+            }
+        }
+
+        const offset = ((currentPage || 1) - 1) * 10;
+        const incidentsRequestURL = `${Config.TRAFFIC_API}?$order=\`traffic_report_status_date_time\`+DESC&$limit=${pageLimit}&$offset=${offset}`;
+        const incidentsResponse = await axios(incidentsRequestURL);
+
+        if (incidentsResponse.status === 200) {
+            incidentDetails.currentPage = currentPage;
+            incidentDetails.pages = returnPages;
+            incidentDetails.incidents = incidentsResponse.data;
+        }
+        res.json({data: { incidentDetails }, statusCode: incidentsResponse.status});
+    }
 });
 
 app.listen(port, () => {
