@@ -10,7 +10,12 @@ const { getUserPreferences } = require("./src/business/getUserPreferences");
 const { saveUserPreferences } = require("./src/business/saveUserPreferences");
 const Config = require("./env.json");
 const axios = require("axios");
+const cron = require("node-cron");
 
+// TODO: Send Text Message when a new Traffic Incident is detected. Scan for new incidents every 5 minutes.
+// cron.schedule('*/5 * * * *', () => {
+//     console.log('Scanning for Traffic Incidents every 5 minutes');
+// });
 
 app.use(bodyParser.json());
 app.use(express.json({
