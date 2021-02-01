@@ -76,28 +76,51 @@ app.post('/api/getIncidents', async (req,res) => {
     } else {
         const totalCount = countResponse.data[0].totalCount;
         const pageLimit = Config.PAGE_LIMIT;
+        const totalPages = Math.ceil(totalCount / pageLimit);
         let incidentDetails = { totalCount, pageLimit };
-        let noOfPages = 9;
-        let returnPages = type === 'page' ? pages : [];
+        let noOfPages = 10;
+        let returnPages = [];
 
-        if (type !== "page") {
-            if (type !== "last") {
-                if (totalCount < (pageLimit * (currentPage + noOfPages))) {
-                    noOfPages = Math.ceil(totalCount - (pageLimit * (currentPage-1)) / pageLimit);
-                }
-                for (let ctr = currentPage; ctr <= (currentPage + noOfPages); ctr++) {
+        switch (type) {
+            case "first": {
+                for (let ctr = 1; ctr <= (totalPages > noOfPages ? noOfPages : totalPages); ctr++) {
                     returnPages.push(ctr);
                 }
-            } else {
-                if (currentPage > (noOfPages + 1)) {
-                    for (let ctr = (currentPage - noOfPages); ctr <= currentPage; ctr++) {
+
+                break;
+            }
+            case "last": {
+                if (totalPages > noOfPages) {
+                    for (let ctr = (totalPages-(noOfPages-1)); ctr <= totalPages; ctr++) {
                         returnPages.push(ctr);
                     }
                 } else {
-                    for (let ctr = 1; ctr <= currentPage; ctr++) {
+                    for (let ctr = 1; ctr <= totalPages; ctr++) {
                         returnPages.push(ctr);
                     }
                 }
+                break;
+            }
+            case "previous": {
+                if (!pages.includes(currentPage)) {
+                    pages.pop();
+                    pages.unshift(currentPage);
+                }
+                returnPages = pages;
+
+                break;
+            }
+            case "next": {
+                if (!pages.includes(currentPage)) {
+                    pages.shift();
+                    pages.push(currentPage);
+                }
+                returnPages = pages;
+
+                break;
+            }
+            default: {
+                returnPages = pages;
             }
         }
 
@@ -112,6 +135,18 @@ app.post('/api/getIncidents', async (req,res) => {
         }
         res.json({data: { incidentDetails }, statusCode: incidentsResponse.status});
     }
+});
+
+app.post('/api/getRecentIncidents', async (req,res) => {
+        const recentIncidentsRequestURL = `${Config.TRAFFIC_API}?$order=\`traffic_report_status_date_time\`+DESC&$limit=3&$offset=0`;
+        const recentIncidentsResponse = await axios(recentIncidentsRequestURL);
+        console.log("RECENT INCIDENTS --> ", recentIncidentsResponse.data);
+
+        if (recentIncidentsResponse.status === 200) {
+            res.json({data: { recentIncidents: recentIncidentsResponse.data }, statusCode: recentIncidentsResponse.status});
+        } else {
+            res.json({data: {}, statusCode: recentIncidentsResponse.status});
+        }
 });
 
 app.listen(port, () => {

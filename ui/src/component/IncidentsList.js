@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {orderBy, isEmpty} from "lodash";
 import "./css/component.css";
 import incidentsListService from "../service/IncidentsListService";
+import moment from "moment";
 
 const gotToPage = ({ setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage, type, pages }) => () => {
     incidentsListService({locations: [], currentPage, type, pages }).then(response => {
@@ -52,12 +53,12 @@ const IncidentsList = (props) => {
                     <nav aria-label="Page Navigation">
                         <ul className="pagination">
                             <li className={firstPreviousClassName}><a className="page-link" onClick={gotToPage({setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage: 1, type: 'first'})}>&lt;&lt;</a></li>
-                            <li className={firstPreviousClassName}><a className="page-link" onClick={gotToPage({setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage: (currentPage - 1), type: 'previous'})}>&lt;</a></li>
+                            <li className={firstPreviousClassName}><a className="page-link" onClick={gotToPage({setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage: (currentPage - 1), type: 'previous', pages})}>&lt;</a></li>
                             {pages.map((page) => {
                                 const className = page === currentPage ? "page-item active" : "page-item";
                                 return (<li className={className} key={page}><a className="page-link" onClick={gotToPage({setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage: page, type: 'page', pages})}>{page}</a></li>)
                             })}
-                            <li className={nextLastClassName}><a className="page-link" onClick={gotToPage({setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage: (currentPage + 1), type: 'next'})}>&gt;</a></li>
+                            <li className={nextLastClassName}><a className="page-link" onClick={gotToPage({setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage: (currentPage + 1), type: 'next', pages})}>&gt;</a></li>
                             <li className={nextLastClassName}><a className="page-link" onClick={gotToPage({setComponentIncidentDetails, setComponentIncidentDetailsError, currentPage: Math.ceil(totalCount/pageLimit), type: 'last'})}>&gt;&gt;</a></li>
                         </ul>
                     </nav>
@@ -84,7 +85,7 @@ const IncidentsList = (props) => {
                                     <th key={counter} scope="row">{counter}</th>
                                     <td key={incident.traffic_report_id.split('_')[1]}>{incident.traffic_report_id.split('_')[1]}</td>
                                     <td key={incident.issue_reported}>{incident.issue_reported}</td>
-                                    <td key={incident.traffic_report_status_date_time}>{incident.traffic_report_status_date_time}</td>
+                                    <td key={incident.traffic_report_status_date_time}>{moment(incident.traffic_report_status_date_time).format("MMMM Do YYYY, h:mm a")}</td>
                                     <td key={incident.location}>{incident.location}</td>
                                     <td key={incident.address}>{incident.address}</td>
                                     <td key={incident.traffic_report_status}>{incident.traffic_report_status}</td>

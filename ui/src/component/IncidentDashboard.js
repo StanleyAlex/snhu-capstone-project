@@ -5,6 +5,7 @@ import {isEmpty} from "lodash";
 import loginUserService from "../service/LoginService";
 import incidentsListService from "../service/IncidentsListService";
 import IncidentsList from "./IncidentsList";
+import RecentIncidents from "./RecentIncidents";
 
 const authenticateUser = ({ setLoading, setLoginError, setAuthenticated }) => () => {
     const userName = document.getElementById("userName").value;
@@ -66,7 +67,7 @@ const IncidentDashboard = () => {
             <div className="misc-details col-sm-3">
                 <UserLogin loading={loading} authenticated={authenticated} loginError={loginError} user={user} authenticateUser={authenticateUser} logoutUser={logoutUser} resetError={resetError({setLoginError})} setters={setters} />
                 <div className="recent-incidents">
-                    {!authenticated ? (<span>Please login to view recent Incidents!</span>) : (<span>You'll see recent Incidents shortly!</span>)}
+                    {!authenticated ? (<span>Please login to view recent Incidents!</span>) : (<RecentIncidents />)}
                 </div>
             </div>
         </div>

@@ -294,3 +294,22 @@ button#preferenceSubmit:disabled {
 .page-link {
     max-width: 3rem;
 }
+
+.recent-incidents {
+    display: inline-block;
+    width: 100%;
+}
+
+.recent-incidents-title {
+    text-transform: uppercase;
+    margin: 0.5rem 0;
+    font-size: large;
+}
+
+li.recent-incident {
+    text-align: left;
+}
+
+.recent-incident-name {
+    font-weight: bold;
+}
